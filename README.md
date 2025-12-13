@@ -1,6 +1,6 @@
 # HashiCorp Certified: Terraform Associate (003)
 
-My personal notes on gaining the certification for Terraform Associate.
+My personal notes and practice for gaining the certification for Terraform Associate.
 
 ## Resources
 

@@ -34,3 +34,21 @@ terraform {
 
 provider "digitalocean" {}
 ```
+
+## Authentication Configuration
+
+Don't hardcode credentials. For AWS, can point to the config and credentials files for the AWS CLI under `.aws`.
+
+``` Terraform
+provider "aws" {
+  shared_config_files      = ["~/.aws/config"]
+  shared_credentials_files = ["~/.aws/credentials"]
+  profile                  = "terraform"
+}
+```
+
+However these are the default locations. So you don't really have to specify, it will do this by default if you remove these lines (however for "profile" it will use the default AWS CLI profile by default).
+
+You could also use environment variables in your OS.
+
+For AWS, you can use IAM roles, and other AWS-specific approaches.
