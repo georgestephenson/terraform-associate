@@ -2,7 +2,7 @@
 
 A `resource` block in our `.tf` file specifies one or more infrastructure objects.
 
-- In the below `resource` block, `myec2` will be the local name of this resource. "my-first-ec2" is the actual Name tag in AWS for this EC2 instance.
+- In the below `resource` block, `myec2` will be the *local name* of this resource. "my-first-ec2" is the actual Name tag in AWS for this EC2 instance.
 - The type of "aws_instance" and name of "myec2" is the unique identifier for this resource.
 
 ``` Terraform

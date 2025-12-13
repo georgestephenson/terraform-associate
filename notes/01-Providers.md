@@ -52,3 +52,23 @@ However these are the default locations. So you don't really have to specify, it
 You could also use environment variables in your OS.
 
 For AWS, you can use IAM roles, and other AWS-specific approaches.
+
+## Provider Versioning
+
+- Provider plugins separate to Terraform version, have different sets of version numbers.
+- In the `required_providers` property of the terraform config, you can set the version number.
+
+### Constraints
+
+You can use these version number constraints to set the desired range of version numbers:
+
+- \>= 1.0
+- <= 1.0
+- ~= 2.0 (any version in the 2.X range)
+- \>= 2.10, <= 2.30
+
+### `.terraform.lock.hcl`
+
+The `.terraform.lock.hcl` file will specify the exact version of the provider that has been used. In production it's advised not to vary the exact provider version, not until you have done testing of the new version, so the lock file specifies the exact version.
+
+Use `terraform init -upgrade` to overwrite lock file and upgrade the provider version.
