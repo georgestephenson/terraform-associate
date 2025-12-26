@@ -50,3 +50,43 @@ terraform plan -var="instance_type=m5.large"
 If no value, Terraform also search for TF_VAR_* environment variables, where * if the terraform variable name.
 
 e.g. TF_VAR_instance_type
+
+## Variable definition precedence
+
+Load variable in following order, later sources take precedence over earlier ones, by overwriting the earlier ones.
+
+1. Environment variables
+2. terraform.tfvars, if present
+3. terraform.tfvars.json, if present
+4. *.auto.tfvars or *.auto.tfvars.json, processed in lexical order
+5. Any -var and -var-file options in CLI
+
+## Data Types
+
+We can restrict variables to a certain data type.
+
+e.g. Number or string.
+
+
+``` HCL
+variable "username" {
+  type = number
+}
+```
+
+This would mean only numbers can be the username variable value.
+
+### Supported data types
+
+- string
+- number
+- bool
+- list
+- set
+- map
+- null
+
+#### Lists
+
+- Multiple values in comma-separated list, any primitive type e.g. ["item1", 2, true]
+- You can also specify types in the list, e.g. type = list(number)
