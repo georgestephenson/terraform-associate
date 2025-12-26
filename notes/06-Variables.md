@@ -89,4 +89,25 @@ This would mean only numbers can be the username variable value.
 #### Lists
 
 - Multiple values in comma-separated list, any primitive type e.g. ["item1", 2, true]
-- You can also specify types in the list, e.g. type = list(number)
+- You can also specify types in the list, e.g. 
+
+```
+type = list(number)
+```
+
+With a list you can reference an index to get a specific value in the list, for example:
+
+```
+var.list[0]
+```
+
+### Maps
+
+- Collection of key-value pairs
+- Typical example is tags in AWS
+- If I have a map variable called types, then I can reference one of the key-value pairs using the key like this:
+
+```
+var.types["us-west-2"]
+```
+
