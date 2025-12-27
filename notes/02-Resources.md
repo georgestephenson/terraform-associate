@@ -21,3 +21,26 @@ resource "aws_instance" "myec2" {
 The `terraform destroy` command will destroy all the resources created.
 
 `-target` option allows you to focus on a subset of resources, using the pattern `resource_type.resource_name`
+
+## Count meta-argument
+
+- You can add count argument to resource to create that many resources (default is one resource)
+- If you can't create duplicates, e.g. IAM users with the same name, then after Terraform creates the first one,
+
+### Count.index
+
+Each created resource when count is >1 has an index that can be referenced, e.g.
+
+- aws_instance.myec2[0]
+- aws_instance.myec2[1]
+- aws_instance.myec2[2]
+
+You can use this index as a value e.g.
+
+```
+tags = {
+  Name = "payments-system-${count.index}"
+}
+```
+
+You can also combine count.index with a list type variable, so that each resource takes a different value from the list.
