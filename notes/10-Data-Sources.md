@@ -50,3 +50,5 @@ Within a data block you can specify a filter block to query specific data
 ## Fetching latest OS image
 
 - Common use case for Terraform data source, get latest OS AMI image
+- Same AMI image has different AMI ID in each region
+- Can use AMI Data Source to fetch AMI ID in the specified region
