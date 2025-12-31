@@ -25,7 +25,17 @@ The `terraform destroy` command will destroy all the resources created.
 ## Count meta-argument
 
 - You can add count argument to resource to create that many resources (default is one resource)
-- If you can't create duplicates, e.g. IAM users with the same name, then after Terraform creates the first one,
+- If you can't create duplicates, e.g. IAM users with the same name, then after Terraform creates the first one, you will get an error after that. So the first will be created but no duplicates are created.
+
+The count attribute can be added like so:
+
+``` HCL
+resource "aws_iam_user" "lb" {
+  name = "iamuser.${count.index}"
+  count = 3
+  path = "/system/"
+}
+```
 
 ### Count.index
 
