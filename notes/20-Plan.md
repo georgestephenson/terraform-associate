@@ -20,3 +20,17 @@ Can output plan using `terraform plan -output xyz.plan`
 ``` bash
 terraform show -json xyz.plan | jq
 ```
+
+## Resource Tagging
+
+You can call `terraform plan` against a specific resource in a specific file:
+
+``` HCL
+terraform plan -target local_file.foo
+```
+
+This will only update the plan for the resource foo in local_file.
+
+Use case: if you have work in progress changes across 10 resources, so you can't apply all the changes yet. But you need to fix one resource issue.
+
+There could be issues such as network failure, upstream cloud platform, or a bug in Terraform meaning a specific resource is out of sync and has issues. Resource tagging can be useful to troubleshoot errors.

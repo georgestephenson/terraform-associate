@@ -12,3 +12,11 @@ Four types of potential issues:
 ## Reporting Bugs
 
 Report bugs using the `hashicorp/terraform` GitHub repo issues page.
+
+## Avoiding API throttling
+
+A large Terraform plan will lead to many API calls, you may encounter API throttling as a result. Potentially this impacts production performance.
+
+- You could break larger project down to smaller project
+- You could use resource targeting if you're not able to break down the project.
+- The `-refresh=false` will skip refreshing the current state in the .tfstate file, which will save time if you're confident that the current state is accurate.
