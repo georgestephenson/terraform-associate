@@ -16,3 +16,23 @@ Terraform Console is an interactive environment specifically for testing functio
 ## File function
 
 - Can reduce code size of .tf file, for example AWS policies in JSON format. Instead of writing it inline in the .tf file with jsonencode(), you can reference a .json file.
+
+## Zipmap
+
+Take list of keys and list of values, and zipmaps them into a list of key-value pairs.
+
+```
+> zipmap(["a", "b"], [1, 2])
+{
+  "a" = 1
+  "b" = 2
+}
+```
+
+E.g. map IAM users and ARNs in the output variable using zipmap, combined with the splat expression on the same list of resources
+
+```
+output "combined" {
+  value = zipmap(aws_iam_user.lb[*].name,aws_iam_user.lb[*].arn)
+}
+```

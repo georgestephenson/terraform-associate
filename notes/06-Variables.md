@@ -111,3 +111,19 @@ var.list[0]
 var.types["us-west-2"]
 ```
 
+### Sets
+
+- Only unique elements
+- Formatting similar to a list
+- Requires specifying the element type e.g. set(string)
+- Does not store the order of elements, the set is unordered.
+
+### Object
+
+Data type of object is a collection of key-value pairs, but each value can be a different type.
+
+``` HCL
+variable "my-object" {
+  type = object({"Name" = string, "userID" = number})
+}
+```
