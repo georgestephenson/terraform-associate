@@ -35,3 +35,21 @@ provisioner "local-exec" {
 ```
 
 `remote-exec` will also need a `connection` block. You can specify multiple inline commands in the `remote-exec` block with the `inline` attribute and a list of strings.
+
+## Points to note
+
+- Common example is using this with EC2 instances/VMs, but notes that provisioners can be used with any resource block type.
+- You could have multiple local-exec provisioners within one resource block
+
+## Create time vs Destroy time
+
+- By default provisioners run during creation of resource, not at update time or any other time.
+- You can add `when = destroy` attribute to `local-exec` provisioner, which will run commands immediately before the resource is destroyed.
+- Use case example: remove and de-link antivirus software before EC2 instance is terminated.
+
+## Tainting resource in creation-time provisioner
+
+- If creation-time provisioner fails, resource is tainted.
+- Tainted resource will be planned for destruction and recreation upon next Terraform apply, rather than leave it in a semi-configured state.
+
+This happens by default - if the provisioner fails then the resource fails. However, there is an `on_failure` setting which can be set to `continue` optionally. By default this is set to `fail`.
