@@ -34,3 +34,23 @@ This will only update the plan for the resource foo in local_file.
 Use case: if you have work in progress changes across 10 resources, so you can't apply all the changes yet. But you need to fix one resource issue.
 
 There could be issues such as network failure, upstream cloud platform, or a bug in Terraform meaning a specific resource is out of sync and has issues. Resource tagging can be useful to troubleshoot errors.
+
+## Provider validation
+
+- Some values input are validated by provider during `terraform plan`, such as the IAM name not containing certain special chars like hash
+- Others aren't validated provider-side, like S3 bucket name min and max length.
+
+## Input variable validation
+
+- Similarly, we can enforce rules/constraints on input variables
+
+``` HCL
+variable "db_password" {
+  type = string
+
+  validation {
+    condition = length(var.db_password) >= 12
+    error_message = "Length of Database Password must be equal to or greater than 12 characters"
+  }
+}
+```
