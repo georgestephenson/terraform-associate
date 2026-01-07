@@ -106,6 +106,48 @@ In total, there are four arguments avaiable within the lifecycle block
 - ignore_changes, as above, ignore specific changes to live objects. Can provide a list or attributes, or the special keyword `all` to ignore all attributes. This will allow create or destroy on resources but never update.
 - replace_triggered_by, replace object when specified items change
 
+#### Preconditions and Postconditions
+
+Also available within the lifecycle block are `precondition` and `postcondition`. It allows you to run some logic before or after evaluating an object.
+
+For example, launch EC2 instance only if eligible for free tier. This is dependent on it being certain instance_types. Provider will give these attributes
+
+``` HCL
+data "aws_ec2_instance_type" "example" {
+  instance_type = "t3.micro"
+}
+
+output "instance_type" {
+  value = data.aws_ec2_instance_type.example.free_tier_eligible
+}
+
+
+
+resource "aws_instance" "example" {
+  instance_type = "t2.micro"
+  ami           = "ami-066784287e358dad1"
+
+  lifecycle {
+
+    precondition {
+      condition = data.aws_ec2_instance_type.example.free_tier_eligible
+      error_message = "Instance Type is not part of free tier"
+    }
+
+    postcondition {
+      condition = self.public_dns == ""
+      error_message = "Public IPV4 or DNS is mandatory for this server"
+    }
+  }
+}
+```
+
+The "self" variable is only available in postcondition as it's available after instance is launched.
+
+- Precondition prevents creation/update
+- Postcondition will prevent further changes after postcondition triggered by creation/update. But you can destroy the resource.
+- Available in Terraform v1.2.0 or later
+
 ## Resource dependencies
 
 - For example, need an S3 bucket to store some data before you can create an EC2 instance
