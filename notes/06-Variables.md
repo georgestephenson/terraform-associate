@@ -127,3 +127,13 @@ variable "my-object" {
   type = object({"Name" = string, "userID" = number})
 }
 ```
+
+## Sensitive
+
+You can add `sensitive = true` to variable and output blocks to avoid exposing the data in CLI output and logs, for e.g. secret passwords
+
+- Resource type of local_sensitive_file instead of local_value can take a sensitive value
+- Referring to a sensistive variable in output will immediately cause an error when you try to run the plan
+- You can solve this by setting the output to `sensitive = true` also, and it will then hide the value, but it's still in .tfstate
+- .tfstate is not protected by setting values to sensitive, hence why state file can contain sensitive information and should be secured/encrypted
+- Many providers automatically consider passwords and secrets sensitive

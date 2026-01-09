@@ -72,3 +72,30 @@ You can use these version number constraints to set the desired range of version
 The `.terraform.lock.hcl` file will specify the exact version of the provider that has been used. In production it's advised not to vary the exact provider version, not until you have done testing of the new version, so the lock file specifies the exact version.
 
 Use `terraform init -upgrade` to overwrite lock file and upgrade the provider version.
+
+## Multiple Provider Configuration
+
+- Discussed before in "modules". Provider can have an alias, so you can have multiple e.g. "aws" providers
+- You firstly give the provider block an alias attribute, alias = "mumbai", alias = "usa", etc.
+- Then in resource you can specify which provider, e.g. provider = aws.mumbai, provider = aws.usa, etc.
+
+## Required Providers
+
+You can specify version constraints in a `required_providers` block
+
+``` HCL
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = ">= 5.50"
+    }
+  }
+}
+```
+
+Terraform downloads version based on constraint - then locks the version in .terraform.lock.hcl, to remember this exact version
+
+- If you change the constraint which no longer matches lock file, you get an error asking you to run `terraform init -upgrade` to upgrade to this version, overriding the lock file
+- Lock file uses hash values to check provider version is an exact match
+- Lock file only works for providers, for modules currently Terraform always selects the newest module within the version constraints
