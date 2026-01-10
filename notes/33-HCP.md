@@ -72,6 +72,7 @@ Also can set custom permissions for finer grain control
 - Enforcement settings, hard mandatory or soft
 - e.g. check EC2 has tags, or check 0.0.0.0/0 is not enabled
 - Sentinel checks happen after plan stage, before apply
+- Sentinel is a proactive service.
 
 ## Air Gapped Environment
 

@@ -1,5 +1,9 @@
 # Terraform Plan notes
 
+`terraform plan` command allows you to create an execution plan.
+
+Note: state file is never modified by `terraform plan`. Older versions would correct state file when drift is detected, but not anymore.
+
 ## Plan file
 
 You can run the apply command against a file consisting of a prior generate plan.
